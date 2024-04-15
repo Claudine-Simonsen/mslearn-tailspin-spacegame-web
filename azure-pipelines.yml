@@ -18,7 +18,7 @@ steps:
 - task: UseDotNet@2
   displayName: 'Use .NET SDK $(dotnetSdkVersion)'
   inputs:
-    version: '(dotnetSdkVersion)'
+    version: '$(dotnetSdkVersion)'
 
 - task: Npm@1
   displayName: 'Run npm install'
@@ -50,13 +50,13 @@ steps:
 
 - task: DotNetCoreCLI@2
   displayName: 'Publish the project - $(buildConfiguration)'
-  inputs:  
+  inputs:
     command: 'publish'
     projects: '**/*.csproj'
-    publishWebProjects: false  
-    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'  
-    zipAfterPublish: true 
-    
-- task: PublishBuildArtifacts@1  
-  displayName: 'Publish Artifact: drop'  
+    publishWebProjects: false
+    arguments: '--no-build --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)/$(buildConfiguration)'
+    zipAfterPublish: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact: drop'
   condition: succeeded()
